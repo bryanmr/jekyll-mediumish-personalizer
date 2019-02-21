@@ -1,7 +1,7 @@
-all: clean mediumish-theme-jekyll \
+all: clean mediumish-theme-jekyll/Gemfile \
 	copy_theme delete_existing_posts copy_site_source bundle done
 
-mediumish-theme-jekyll:
+mediumish-theme-jekyll/Gemfile:
 	git submodule init
 	git submodule update
 
