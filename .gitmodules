@@ -1,0 +1,3 @@
+[submodule "mediumish-theme-jekyll"]
+	path = mediumish-theme-jekyll
+	url = git@github.com:bryanmr/mediumish-theme-jekyll.git
