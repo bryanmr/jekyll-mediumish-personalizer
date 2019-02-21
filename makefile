@@ -1,6 +1,7 @@
 all: saved-site clean mediumish-theme-jekyll/Gemfile \
 	copy_theme delete_existing_posts \
-	copy_site_posts copy_site_assets copy_site_config \
+	copy_site_posts copy_site_pages \
+	copy_site_assets copy_site_config \
        	bundle done
 
 serve: all serve
@@ -24,6 +25,9 @@ delete_existing_posts:
 
 copy_site_posts:
 	cp -R *-ss/_posts/ dist/
+
+copy_site_pages:
+	cp -R *-ss/_pages/ dist/
 
 copy_site_assets:
 	cp -R *-ss/assets/ dist/
