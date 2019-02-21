@@ -1,0 +1,25 @@
+#!/bin/bash
+echo "The site save (ss) is a directory that contains Jekyll post information"
+echo "This consists of assets, _posts, and a _config.yml"
+
+if [ ! -z "$1" ] ; then
+  ss_dir="$1"
+else
+  read -erp "Enter the location of your site save: " ss_dir
+fi
+
+if [ ! -d "$ss_dir" ] ; then
+  echo "Cannot find the directory!"
+  exit 1
+fi
+
+no_end_slash_dir="${ss_dir%/}"
+ss_linkname=${no_end_slash_dir##*/}
+
+if grep -Eq '\-ss[\/]?$' <<< "$ss_dir" ; then
+  echo "Creating symbolic link. Link name is ./$ss_linkname"
+  ln -s "$ss_dir"
+else
+  echo "Creating symbolic link. Link name is ./$ss_linkname-ss"
+  ln -s "$ss_dir" "$ss_linkname"-ss
+fi

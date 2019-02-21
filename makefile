@@ -1,9 +1,16 @@
-all: clean mediumish-theme-jekyll/Gemfile \
+all: saved-site clean mediumish-theme-jekyll/Gemfile \
 	copy_theme delete_existing_posts \
 	copy_site_posts copy_site_assets copy_site_config \
        	bundle done
 
 serve: all serve
+
+saved-site: *-ss/_posts/
+*-ss/_posts/:
+	@echo "Expecting to find a directory ending in -ss"
+	@echo "Site save should contain: _posts/, _config.yml, and assets/"
+	@echo "Run ./configure and point it at your saved site information"
+	exit 1
 
 mediumish-theme-jekyll/Gemfile:
 	git submodule init
