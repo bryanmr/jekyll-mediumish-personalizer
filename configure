@@ -1,25 +1,60 @@
 #!/bin/bash
-echo "The site save (ss) is a directory that contains Jekyll post information"
-echo "This consists of assets, _posts, and a _config.yml"
+# Makes symlinks for the two directories we will use
+make_site_save() {
+  echo "The site save (ss) is a directory that contains Jekyll post information"
+  echo "This consists of assets, _posts, and a _config.yml"
 
-if [ ! -z "$1" ] ; then
-  ss_dir="$1"
-else
-  read -erp "Enter the location of your site save: " ss_dir
-fi
+  if [ ! -z "$1" ] ; then
+    ss_dir="$1"
+  else
+    read -erp "Enter the location of your site save: " ss_dir
+  fi
 
-if [ ! -d "$ss_dir" ] ; then
-  echo "Cannot find the directory!"
-  exit 1
-fi
+  if [ ! -d "$ss_dir" ] ; then
+    echo "Cannot find the directory!"
+    exit 1
+  fi
 
-no_end_slash_dir="${ss_dir%/}"
-ss_linkname=${no_end_slash_dir##*/}
+  no_end_slash_dir="${ss_dir%/}"
+  ss_linkname=${no_end_slash_dir##*/}
 
-if grep -Eq '\-ss[\/]?$' <<< "$ss_dir" ; then
-  echo "Creating symbolic link. Link name is ./$ss_linkname"
-  ln -s "$ss_dir"
-else
-  echo "Creating symbolic link. Link name is ./$ss_linkname-ss"
-  ln -s "$ss_dir" "$ss_linkname"-ss
-fi
+  if grep -Eq '\-ss[\/]?$' <<< "$ss_dir" ; then
+    echo "Creating symbolic link. Link name is ./$ss_linkname"
+    ln -s "$ss_dir"
+  else
+    echo "Creating symbolic link. Link name is ./$ss_linkname-ss"
+    ln -s "$ss_dir" "$ss_linkname"-ss
+  fi
+}
+make_jekyll_bundle() {
+  echo "We need a Jekyll theme bundle"
+  echo "Usually from Github clone, otherwise you would update your Gemspec"
+
+  if [ ! -z "$1" ] ; then
+    j_dir="$1"
+  else
+    read -erp "Enter the location of your Jekyll theme: " j_dir
+  fi
+
+  if [ ! -d "$j_dir" ] ; then
+    echo "Cannot find the directory!"
+    exit 1
+  fi
+
+  no_end_slash_dir="${j_dir%/}"
+  j_linkname=${no_end_slash_dir##*/}
+
+  if grep -Eq '\-jekyll[\/]?$' <<< "$j_dir" ; then
+    echo "Creating symbolic link. Link name is ./$j_linkname"
+    ln -s "$j_dir"
+  else
+    echo "Creating symbolic link. Link name is ./$j_linkname-jekyll"
+    ln -s "$j_dir" "$j_linkname"-jekyll
+  fi
+}
+
+rm -f -- *-ss
+rm -f -- *-jekyll
+
+make_site_save "$1"
+make_jekyll_bundle "$2"

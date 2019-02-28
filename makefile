@@ -1,5 +1,5 @@
-all: saved-site clean mediumish-theme-jekyll/Gemfile \
-	copy_theme delete_non_prod \
+all: saved-site clean \
+	copy_theme delete_not_ours \
 	copy_site bundle done
 
 serve: all serve
@@ -13,21 +13,14 @@ saved-site: *-ss/_posts/
 	@echo "Run ./configure and point it at your saved site information"
 	exit 1
 
-mediumish-theme-jekyll/Gemfile:
-	git submodule init
-	git submodule update
-
 copy_theme:
-	cp -R mediumish-theme-jekyll/ dist/
+	cp -R *-jekyll/ dist/
 
-delete_non_prod:
-	rm -rf dist/changelog.md dist/LICENSE.txt dist/README.md dist/_pages/ dist/_posts
+delete_not_ours:
+	rm -rf dist/changelog.md dist/LICENSE.txt dist/README.md dist/_posts/
 
 copy_site:
-	cp -R *-ss/_posts/ dist/
-	cp -R *-ss/_pages/ dist/
-	cp -R *-ss/assets/ dist/
-	cp -R *-ss/_config.yml dist/
+	cp -R *-ss/* dist/
 
 bundle:
 	cd dist/ && bundle
@@ -41,7 +34,7 @@ serve:
 	cd dist && jekyll serve --watch
 
 production:
-	cd dist && jekyll build
+	cd dist && JEKYLL_ENV=production jekyll build
 
 clean:
 	rm -rf dist/
