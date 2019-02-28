@@ -1,10 +1,10 @@
 all: saved-site clean mediumish-theme-jekyll/Gemfile \
-	copy_theme delete_existing_posts \
-	copy_site_posts copy_site_pages \
-	copy_site_assets copy_site_config \
-       	bundle done
+	copy_theme delete_non_prod \
+	copy_site bundle done
 
 serve: all serve
+
+production: all production
 
 saved-site: *-ss/_posts/
 *-ss/_posts/:
@@ -20,19 +20,13 @@ mediumish-theme-jekyll/Gemfile:
 copy_theme:
 	cp -R mediumish-theme-jekyll/ dist/
 
-delete_existing_posts:
-	rm -rf dist/_posts/
+delete_non_prod:
+	rm -rf dist/changelog.md dist/LICENSE.txt dist/README.md dist/_pages/ dist/_posts
 
-copy_site_posts:
+copy_site:
 	cp -R *-ss/_posts/ dist/
-
-copy_site_pages:
 	cp -R *-ss/_pages/ dist/
-
-copy_site_assets:
 	cp -R *-ss/assets/ dist/
-
-copy_site_config:
 	cp -R *-ss/_config.yml dist/
 
 bundle:
@@ -45,6 +39,9 @@ done:
 
 serve:
 	cd dist && jekyll serve --watch
+
+production:
+	cd dist && jekyll build
 
 clean:
 	rm -rf dist/
