@@ -2,9 +2,11 @@ all: saved-site clean \
 	copy_theme delete_not_ours \
 	copy_site bundle done
 
-serve: all serve
+serve: all 
+	cd dist && jekyll serve --watch
 
-production: all production
+production: all
+	cd dist && JEKYLL_ENV=production jekyll build
 
 saved-site: *-ss/_posts/
 *-ss/_posts/:
@@ -29,12 +31,6 @@ done:
 	@echo ; echo "Completed without error"
 	@echo "Run the below commands to start serving:"
 	@echo "cd dist && jekyll serve --watch"
-
-serve:
-	cd dist && jekyll serve --watch
-
-production:
-	cd dist && JEKYLL_ENV=production jekyll build
 
 clean:
 	rm -rf dist/
