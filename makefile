@@ -7,6 +7,7 @@ serve: all
 
 production: all
 	cd dist && JEKYLL_ENV=production jekyll build
+	./deploy_production
 
 saved-site: *-ss/_posts/
 *-ss/_posts/:

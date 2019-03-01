@@ -1,0 +1,5 @@
+#!/bin/bash
+bucket_name=""
+# shellcheck disable=SC1091
+source secrets
+gsutil -m rsync -R dist/_site/ "$bucket_name"
