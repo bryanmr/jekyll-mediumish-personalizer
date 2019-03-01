@@ -20,7 +20,7 @@ copy_theme:
 	cp -R *-jekyll/ dist/
 
 delete_not_ours:
-	rm -rf dist/changelog.md dist/LICENSE.txt dist/README.md dist/_posts/
+	rm -rf -- dist/changelog.md dist/LICENSE.txt dist/README.md dist/_posts/
 
 copy_site:
 	cp -R *-ss/* dist/

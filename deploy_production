@@ -2,4 +2,4 @@
 bucket_name=""
 # shellcheck disable=SC1091
 source secrets
-gsutil -m rsync -R dist/_site/ "$bucket_name"
+gsutil -m rsync -x ".*\.gemspec$" -cdR dist/_site/ "$bucket_name"
