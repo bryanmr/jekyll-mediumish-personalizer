@@ -1,6 +1,6 @@
 all: saved-site clean \
 	copy_theme delete_not_ours \
-	copy_site bundle build done
+	copy_site build done
 
 serve: all 
 	cd dist && jekyll serve --skip-initial-build --watch
