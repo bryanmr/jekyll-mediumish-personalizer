@@ -1,12 +1,13 @@
 all: saved-site clean \
 	copy_theme delete_not_ours \
-	copy_site bundle done
+	copy_site bundle build done
 
 serve: all 
-	cd dist && jekyll serve --watch
+	cd dist && jekyll serve --skip-initial-build --watch
 
 production: all
 	cd dist && JEKYLL_ENV=production jekyll build
+	cat dist/_site/search_data.json | node build_index.js > dist/_site/lunr_serialized.json
 	./deploy_production
 
 saved-site: *-ss/_posts/
@@ -27,6 +28,10 @@ copy_site:
 
 bundle:
 	cd dist/ && bundle
+
+build:
+	cd dist && jekyll build
+	cat dist/_site/search_data.json | node build_index.js > dist/_site/lunr_serialized.json
 
 done:
 	@echo ; echo "Completed without error"

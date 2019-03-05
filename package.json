@@ -1,0 +1,28 @@
+{
+  "name": "jekyll-simple-build-environment",
+  "version": "1.0.0",
+  "description": "Combines Jekyll projects and builds the site",
+  "main": "build_index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bryanmr/jekyll-theme-minimal-magazine.git"
+  },
+  "keywords": [
+    "jekyll",
+    "lunr",
+    "search",
+    "blog"
+  ],
+  "author": "Bryan Reese",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bryanmr/jekyll-theme-minimal-magazine/issues"
+  },
+  "homepage": "https://github.com/bryanmr/jekyll-theme-minimal-magazine#readme",
+  "dependencies": {
+    "lunr": "^2.3.6"
+  }
+}
