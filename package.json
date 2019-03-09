@@ -24,5 +24,6 @@
   "homepage": "https://github.com/bryanmr/jekyll-theme-minimal-magazine#readme",
   "dependencies": {
     "lunr": "^2.3.6"
-  }
+  },
+  "devDependencies": {}
 }
