@@ -1,11 +1,13 @@
-all: saved-site clean \
-	copy_theme delete_not_ours \
-	copy_site build done
+all: all_minus_build build done
 
-serve: all 
+all_minus_build: saved-site clean \
+        copy_theme delete_not_ours \
+        copy_site done
+
+serve: all
 	cd dist && jekyll serve --skip-initial-build --watch
 
-production: all
+production: all_minus_build
 	cd dist && JEKYLL_ENV=production jekyll build
 	cat dist/_site/search_data.json | node build_index.js > dist/_site/lunr_serialized.json
 	./deploy_production
@@ -35,8 +37,6 @@ build:
 
 done:
 	@echo ; echo "Completed without error"
-	@echo "Run the below commands to start serving:"
-	@echo "cd dist && jekyll serve --watch"
 
 clean:
 	rm -rf dist/
