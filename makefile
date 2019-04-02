@@ -32,7 +32,7 @@ bundle:
 	cd dist/ && bundle
 
 build:
-	cd dist && jekyll build
+	cd dist && jekyll build --profile
 	cat dist/_site/search_data.json | node build_index.js > dist/_site/lunr_serialized.json
 
 done:
