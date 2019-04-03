@@ -1,14 +1,19 @@
 #!/bin/bash
+site_url=""
 bucket_name=""
 cf_email=""
 cf_api_key=""
 cf_zone_id=""
 # shellcheck disable=SC1091
+
 source secrets
+
 gsutil -m rsync -x ".*\.gemspec$" -cdR dist/_site/ "$bucket_name"
+
 curl -X POST "https://api.cloudflare.com/client/v4/zones/$cf_zone_id/purge_cache" \
      -H "X-Auth-Email: $cf_email" \
      -H "X-Auth-Key: $cf_api_key" \
      -H "Content-Type: application/json" \
      --data '{"purge_everything":true}'
-echo
+
+echo # Since we don't get a newline back with curl

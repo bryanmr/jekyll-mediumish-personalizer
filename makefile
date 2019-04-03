@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 all: all_minus_build build done
 
 all_minus_build: saved-site clean \
@@ -7,10 +9,12 @@ all_minus_build: saved-site clean \
 serve: all
 	cd dist && jekyll serve --skip-initial-build --watch
 
-production: all_minus_build
-	cd dist && JEKYLL_ENV=production jekyll build
-	cat dist/_site/search_data.json | node build_index.js > dist/_site/lunr_serialized.json
+production: all_minus_build prod_build nodejs_work
 	./deploy_production
+
+prod_build:
+	cd dist && JEKYLL_ENV=production jekyll build
+
 
 saved-site: *-ss/_posts/
 *-ss/_posts/:
@@ -22,6 +26,10 @@ saved-site: *-ss/_posts/
 copy_theme:
 	cp -R *-jekyll/ dist/
 
+nodejs_work:
+	cat dist/_site/search_data.json | node build_index.js > dist/_site/lunr_serialized.json
+	./fetch_comments/fetch_comments.sh
+
 delete_not_ours:
 	rm -rf -- dist/changelog.md dist/LICENSE.txt dist/README.md dist/_posts/
 
@@ -31,9 +39,10 @@ copy_site:
 bundle:
 	cd dist/ && bundle
 
-build:
+build: dev_build nodejs_work
+
+dev_build:
 	cd dist && jekyll build --profile
-	cat dist/_site/search_data.json | node build_index.js > dist/_site/lunr_serialized.json
 
 done:
 	@echo ; echo "Completed without error"
