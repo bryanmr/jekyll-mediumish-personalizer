@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/bryanmr/jekyll-theme-minimal-magazine#readme",
   "dependencies": {
-    "@google-cloud/storage": "^2.4.3",
     "lunr": "^2.3.6"
   },
   "devDependencies": {}

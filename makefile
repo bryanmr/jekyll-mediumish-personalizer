@@ -27,7 +27,7 @@ copy_theme:
 	cp -R *-jekyll/ dist/
 
 nodejs_work:
-	cat dist/_site/search_data.json | node build_index.js > dist/_site/lunr_serialized.json
+	cat dist/_site/search_data.json | node lunr_prebuild/build_index.js > dist/_site/lunr_serialized.json
 	./fetch_comments/fetch_comments.sh
 
 delete_not_ours:
