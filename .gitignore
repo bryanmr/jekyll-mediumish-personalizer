@@ -1,7 +1,8 @@
 *~
+*.swp
 *-ss
 *-jekyll
 dist
 secrets
-node_modules/
+node_modules
 package-lock.json

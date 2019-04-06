@@ -10,7 +10,7 @@ serve: all
 	cd dist && jekyll serve --skip-initial-build --watch
 
 production: all_minus_build prod_build nodejs_work
-	./deploy_production
+	./helper-scripts/deploy_production
 
 prod_build:
 	cd dist && JEKYLL_ENV=production jekyll build
@@ -28,7 +28,7 @@ copy_theme:
 
 nodejs_work:
 	cat dist/_site/search_data.json | node lunr_prebuild/build_index.js > dist/_site/lunr_serialized.json
-	./fetch_comments/fetch_comments.sh
+	cd fetch_comments && ./fetch_comments.sh
 
 delete_not_ours:
 	rm -rf -- dist/changelog.md dist/LICENSE.txt dist/README.md dist/_posts/

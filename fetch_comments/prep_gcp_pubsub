@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# This assumes that we already have `gcloud init` ran
+gcloud pubsub topics create get-comments

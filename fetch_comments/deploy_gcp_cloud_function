@@ -1,0 +1,2 @@
+#!/bin/bash
+gcloud functions deploy fetch_comments --runtime nodejs8 --trigger-topic get-comments
