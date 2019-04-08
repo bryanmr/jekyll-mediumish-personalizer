@@ -5,8 +5,15 @@
  * @param {string} siteURL - URL of the post we are checking for */
 exports.fetchComments = () => {
   const siteURL = process.env.site_url;
-  const bucket = process.env.bucket_name;
+  const bucketName = process.env.bucket_short_name;
+  const bucketDir = process.env.bucket_dir;
+  const {Storage} = require('@google-cloud/storage');
+  const storage = new Storage();
+  const myBucket = storage.bucket(bucketName);
+  const file = myBucket.file(bucketDir+'/reddit_comment_threads.json');
+
   const https = require('https');
+
   https.get('https://www.reddit.com/search.json?q=site%3A"'+
     siteURL+'"', (res) => {
     const {statusCode} = res;
@@ -35,11 +42,11 @@ exports.fetchComments = () => {
     });
 
     res.on('end', () => {
-      try {
-        console.log(rawData);
-      } catch (e) {
-        console.error(e.message);
-      }
+      file.save(rawData).then(function() {
+        console.log('Saved to file!');
+      }).catch(function(e) {
+        console.error('We failed at saving! Got: '+e.message);
+      });
     });
   }).on('error', (e) => {
     console.error(`Got error: ${e.message}`);
