@@ -1,8 +1,11 @@
 /* exported fetchComments */
+'use strict';
 
 /** Fetches Reddit comment thread and then writes it to console
  * @param {string} siteURL - URL of the post we are checking for */
-exports.fetchComments = (siteURL) => {
+exports.fetchComments = () => {
+  const siteURL = process.env.site_url;
+  const bucket = process.env.bucket_name;
   const https = require('https');
   https.get('https://www.reddit.com/search.json?q=site%3A"'+
     siteURL+'"', (res) => {
